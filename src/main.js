@@ -8,25 +8,44 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   data: {
-    yes: true,
-    no: false
+    books: [
+      {
+        title: 'Entertaining Kids Book',
+        price: 4.99,
+        id: 0,
+        genres: ['kids', 'fiction']
+      },
+      {
+        title: 'Teen Drama',
+        price: 5.99,
+        id: 1,
+        genres: ['teen', 'fiction']
+      },
+      {
+        title: 'Boring Facts',
+        price: 6.99,
+        id: 2,
+        genres: ['adult', 'non-fiction']
+      },
+      {
+        title: 'Overly Complex Story',
+        price: 7.99,
+        id: 3,
+        genres: ['adult', 'science fiction', 'fiction']
+      },
+      {
+        title: 'Facts for Teens',
+        price: 3.99,
+        id: 4,
+        genres: ['teen', 'non-fiction']
+      }
+    ]
   },
   template: `
-    <div>
-        <h1>1: <span v-if="yes">Yes</span></h1>
-        <h1>2: <span v-if="no">No</span></h1>
-        <h1 v-if="no">Don't Show</h1>
-        <h1 v-else>Show!</h1>
-        <hr>
-        <h1>Show v-else-if</h1>
-        <h2 v-if="no">If</h2>
-        <h2 v-else-if="yes">Else If</h2>
-        <h2 v-else>Else</h2>
-        <hr>
-        <h1>Show v-else</h1>
-        <h2 v-if="no">If</h2>
-        <h2 v-else-if="no">Else If</h2>
-        <h2 v-else>Else</h2>
-    </div>
+    <ul>
+      <li v-for="book in books" :key="book.id">
+        {{ book }}
+      </li>
+    </ul>
     `
 })
