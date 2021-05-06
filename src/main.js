@@ -9,21 +9,24 @@ new Vue({
   el: '#app',
   data: {
     yes: true,
-    no: false,
-    maybe: 0,
-    show: 'yes',
-    dontShow: 'no',
-    yesWord: 'yes'
+    no: false
   },
   template: `
     <div>
-      <h1>1:<span v-show="yes">Yes</span></h1>
-      <h1>2:<span v-show="no">No</span></h1>
-      <h1>3:<span v-show="show == 'yes'">Yes!</span></h1>
-      <h1>4:<span v-show="dontShow == 'yes'">No :(</span></h1>
-      <h1>5:<span v-show="show == yesWord">Yes!</span></h1>
-      <h1>6:<span v-show="0 == 1 - 1">Yes!</span></h1>
-      <h1>7:<span v-show="0 == 1 + 1">No :(</span></h1>
+        <h1>1: <span v-if="yes">Yes</span></h1>
+        <h1>2: <span v-if="no">No</span></h1>
+        <h1 v-if="no">Don't Show</h1>
+        <h1 v-else>Show!</h1>
+        <hr>
+        <h1>Show v-else-if</h1>
+        <h2 v-if="no">If</h2>
+        <h2 v-else-if="yes">Else If</h2>
+        <h2 v-else>Else</h2>
+        <hr>
+        <h1>Show v-else</h1>
+        <h2 v-if="no">If</h2>
+        <h2 v-else-if="no">Else If</h2>
+        <h2 v-else>Else</h2>
     </div>
-  `
+    `
 })
