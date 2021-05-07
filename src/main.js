@@ -41,10 +41,19 @@ new Vue({
       }
     ]
   },
-  template: `
+  template: `    
     <ul>
       <li v-for="book in books" :key="book.id">
-        {{ book }}
+        <p><strong>Id:</strong> {{ book.id }}</p>
+        <p><strong>title:</strong> {{ book.title }}</p>
+        <p><strong>price:</strong> {{ book.price }}</p>
+        <p>
+          <strong>genres:</strong>
+          <span v-for="(genre, index) in book.genres">
+            {{genre}}
+            <span v-if="index < book.genres.length -1">, </span>
+          </span>
+        </p>
       </li>
     </ul>
     `
