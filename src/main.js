@@ -12,18 +12,25 @@ new Vue({
     show: true
   },
   methods: {
-    toggle: function() {
-      this.show = !this.show;
+    setShow: function(newValue, event) {
+      if (event) {
+        console.log(event.type);
+      }
+      this.show = newValue;
     }
   },
   template: `
     <div>
-        <h1 v-on:click="toggle">
-            Toggle
-        </h1>
+    <h1 v-on:click="setShow(true, $event)">
+        Show
+    </h1>
+    <h1 @click="setShow(false, $event)">
+        Hide
+    </h1>
         <p v-show="show">
-            Hide and show this message by clicking the word "Toggle"
+            Hide and show this message by clicking "Hide" or "Show"
         </p>
     </div>
     `
 })
+
