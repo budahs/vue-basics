@@ -10,7 +10,8 @@ new Vue({
   el: '#app',
   data: {
     searchText: 'Insert search text',
-    results: []
+    results: [],
+    history: {}
   },
   methods: {
     search: function () {
@@ -18,12 +19,20 @@ new Vue({
         .get(`https://swapi.dev/api/people/?search=${this.searchText}`)
         .then(response => {
           this.results = response.data
+          this.history[this.searchText] = this.results
         })
     }
   },
   watch: {
     searchText: function (newSearchText, oldSearchText) {
-      this.search()
+      if (this.history[newSearchText]) 
+      {
+        this.results = this.history[newSearchText]
+      }
+      else
+      {
+        this.search()
+      }
     }
   },
   template: `
