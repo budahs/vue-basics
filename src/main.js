@@ -6,24 +6,41 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',  
+  el: '#app',
   data: {
-    book: {
-      title: 'Overly Complex Story',
-      price: 7.99,
-      id: 3,
-      genres: ['adult', 'science fiction', 'fiction'],
-      action: function() {
-        return 'I did an action';
-      }
+    bookNameForTemplate: 'Getting to Know Vue.js',
+    bookNameForMethod: 'Getting to Know Vue.js',
+    bookNameForComputed: 'Getting to Know Vue.js',
+    publisher: 'Apress'
+  },
+  methods: {
+    getTitleBlurb: function () {
+      console.log('Called: getTitleBlurb')
+      return `${this.bookNameForMethod} by ${this.publisher}`
     }
   },
-  template: `    
-    <ul>
-      <li v-for="(prop, key, index) in book">
-        {{index}}) {{key}}: {{prop}}
-        <p v-if="typeof prop == 'function'">{{prop()}}</p>
-      </li>
-    </ul>    
+  computed: {
+    titleBlurb: function () {
+      console.log('Called: titleBlurb')
+      return `${this.bookNameForComputed} by ${this.publisher}`
+    }
+  },
+  template: `
+    <div>
+        <h3>Template based:</h3>
+        <h4>{{bookNameForTemplate}} by {{publisher}}</h4>
+        <h3>Method based:</h3>
+        <h4>{{getTitleBlurb()}}</h4>
+        <h3>Computed Property based:</h3>
+        <h4>{{titleBlurb}}</h4>
+        <label>Template:
+        <input type="text" v-model="bookNameForTemplate" /></label>
+        <br>
+        <label>Method:
+        <input type="text" v-model="bookNameForMethod" /></label>
+        <br>
+        <label>Computed:
+        <input type="text" v-model="bookNameForComputed" /></label>
+    </div>
     `
 })
