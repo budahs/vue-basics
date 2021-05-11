@@ -7,6 +7,43 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  methods: {
+    teenFilter: function () {
+      this.books = this.books.filter(book => {
+        return (
+          book.genres.findIndex(genre => {
+            return genre === 'teen'
+          }) >= 0
+        )
+      })
+    },
+    set: function() {
+      var indexToReplace = 0;
+      var newBook = {
+        title: 'Newer Entertaining Kids Book',
+        price: 4.99,
+        id: 0,
+        genres: ['kids', 'fiction']
+      };
+      Vue.set(this.books, indexToReplace, newBook);
+    },
+    splice: function() {
+      var indexToReplace = 3;
+      var newBook = {
+        title: 'A new book title',
+        price: 14.99,
+        id: 7,
+        genres: ['adults', 'sexy']
+      };
+      this.books.splice(indexToReplace, 1, newBook);
+    },
+    resize: function() {
+      // Vue can not detect
+      this.books.length = 1;
+      // Use splice to resize an array, Vue can detect
+      this.books.splice(1);
+    }
+  },
   data: {
     books: [
       {
@@ -42,7 +79,7 @@ new Vue({
     ]
   },
   template: `    
-    <ul>
+    <ul v-on:click="resize">
       <li v-for="book in books" :key="book.id">
         <p><strong>Id:</strong> {{ book.id }}</p>
         <p><strong>title:</strong> {{ book.title }}</p>
