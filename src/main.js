@@ -9,27 +9,31 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   data: {
-    show: true
-  },
-  methods: {
-    setShow: function(newValue, event) {
-      if (event) {
-        console.log(event.type);
-      }
-      this.show = newValue;
-    }
+    messages: []
   },
   template: `
     <div>
-    <h1 v-on:click="setShow(true, $event)">
-        Show
-    </h1>
-    <h1 @click="setShow(false, $event)">
-        Hide
-    </h1>
-        <p v-show="show">
-            Hide and show this message by clicking "Hide" or "Show"
-        </p>
+        <div v-on:click="messages.push('Outer')">
+            <h4>Outer</h4>
+            <div v-on:click.once.capture="messages.push('Middle')">
+                <h4>Middle</h4>
+                <div v-on:click.stop="messages.push('Inner One')">
+                    <h4>Inner One</h4>
+                </div>
+                <div v-on:click="messages.push('Inner B')">
+                    <h4>Inner B</h4>
+                </div>
+            </div>
+        </div>
+        <p>
+            Last clicked:
+            <ol>
+                <li v-for="message in messages">
+                    {{message}}
+                </li>
+            </ol>
+            </p>
+        <input type="button" v-on:click="messages = []" value="Clear" />
     </div>
     `
 })
