@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+const axios = require('axios').default
 
 Vue.config.productionTip = false
 
@@ -8,39 +9,33 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   data: {
-    bookNameForTemplate: 'Getting to Know Vue.js',
-    bookNameForMethod: 'Getting to Know Vue.js',
-    bookNameForComputed: 'Getting to Know Vue.js',
-    publisher: 'Apress'
+    searchText: 'Insert search text',
+    results: []
   },
   methods: {
-    getTitleBlurb: function () {
-      console.log('Called: getTitleBlurb')
-      return `${this.bookNameForMethod} by ${this.publisher}`
+    search: function () {
+      axios
+        .get(`https://swapi.dev/api/people/?search=${this.searchText}`)
+        .then(response => {
+          this.results = response.data
+        })
     }
   },
-  computed: {
-    titleBlurb: function () {
-      console.log('Called: titleBlurb')
-      return `${this.bookNameForComputed} by ${this.publisher}`
+  watch: {
+    searchText: function (newSearchText, oldSearchText) {
+      this.search()
     }
   },
   template: `
     <div>
-        <h3>Template based:</h3>
-        <h4>{{bookNameForTemplate}} by {{publisher}}</h4>
-        <h3>Method based:</h3>
-        <h4>{{getTitleBlurb()}}</h4>
-        <h3>Computed Property based:</h3>
-        <h4>{{titleBlurb}}</h4>
-        <label>Template:
-        <input type="text" v-model="bookNameForTemplate" /></label>
-        <br>
-        <label>Method:
-        <input type="text" v-model="bookNameForMethod" /></label>
-        <br>
-        <label>Computed:
-        <input type="text" v-model="bookNameForComputed" /></label>
+    <label>Search:
+    <input type="text" v-model="searchText" /></label>
+    <h5>Results: <small>{{results.count}}</small></h5>
+    <ul>
+      <li v-for="result in results.results">
+        {{result.name}}
+      </li>
+    </ul>
     </div>
     `
 })
