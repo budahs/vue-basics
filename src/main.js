@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-const axios = require('axios').default
+// const axios = require('axios').default
 
 Vue.config.productionTip = false
 
@@ -9,40 +9,27 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   data: {
-    searchText: 'Insert search text',
-    results: [],
-    history: {}
-  },
-  methods: {
-    search: function () {
-      axios
-        .get(`https://swapi.dev/api/people/?search=${this.searchText}`)
-        .then(response => {
-          this.results = response.data
-          this.history[this.searchText] = this.results
-        })
+    book: {
+      title: 'Getting to Know Vue.js',
+      publisher: 'Apress',
+      year: 2018
     }
   },
   watch: {
-    searchText: function (newSearchText, oldSearchText) {
-      if (this.history[newSearchText]) 
-      {
-        this.results = this.history[newSearchText]
-      }
-      else
-      {
-        this.search()
-      }
+    book: {
+      handler: function (newBook, oldBook) {
+        console.log('Book Changed')
+      },
+      deep: true
     }
   },
   template: `
     <div>
     <label>Search:
-    <input type="text" v-model="searchText" /></label>
-    <h5>Results: <small>{{results.count}}</small></h5>
+    <input type="text" v-model="book.title" /></label>
     <ul>
-      <li v-for="result in results.results">
-        {{result.name}}
+      <li v-for="(value, prop) in book">
+      {{prop}}: {{value}}
       </li>
     </ul>
     </div>
