@@ -20,7 +20,7 @@ new Vue({
       handler: function (newBook, oldBook) {
         console.log('Book Changed')
       },
-      deep: true
+      inmediate: true
     }
   },
   template: `
